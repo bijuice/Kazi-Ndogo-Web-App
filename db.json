@@ -1,0 +1,32 @@
+{
+    "workers": [
+        {
+            "name": "Phanice Ayeko",
+            "number": "0718066184",
+            "email": "p.ayeko@gmail.com",
+            "role": "carpenter",
+            "rating": 3.2
+        },
+        {
+            "name": "Abdul Rahman Rehmtulla",
+            "number": "0718066189",
+            "email": "abdul.r.zaid@gmail.com",
+            "role": "tutor",
+            "rating": 4.5
+        },
+        {
+            "name": "Shabnum Zaid",
+            "number": "0718066186",
+            "email": "shabnum.zaid@gmail.com",
+            "role": "hair dresser",
+            "rating": 3.9
+        },
+        {
+            "name": "Shabnum Zaid",
+            "number": "0718066186",
+            "email": "shabnum.zaid@gmail.com",
+            "role": "tutor",
+            "rating": 4.5
+        }
+    ]
+}

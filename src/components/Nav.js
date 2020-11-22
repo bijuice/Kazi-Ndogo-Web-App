@@ -1,4 +1,4 @@
-import { Navbar, Heading, Icon } from 'react-bulma-components';
+import { Navbar, Heading, Container, Button } from 'react-bulma-components';
 
 const Nav = () => {
 
@@ -8,15 +8,20 @@ const Nav = () => {
 
     return (
 
-        <Navbar color="link">
+        <Navbar color="light">
 
-            <Navbar.Item>
-                <Heading size={3}>Kazi Ndogo</Heading>
-            </Navbar.Item>
+            <Navbar.Brand>
+                <Navbar.Item>
+                    <Heading size={2} color="white"><i>KAZI <sub>ndogo</sub></i></Heading>
+                </Navbar.Item>
+            </Navbar.Brand>
 
             <Navbar.Container position="end">
                 <Navbar.Item onClick={clickHandler}>
-                    <Icon><i className="fas fa-user"></i></Icon>
+                    <Button color="dark"> <Container> User <i className="fas fa-user"></i></Container></Button>
+                </Navbar.Item>
+                <Navbar.Item onClick={clickHandler}>
+                    <Button color="dark"> <Container>Log Out <i class="fas fa-sign-out-alt"></i></Container></Button>
                 </Navbar.Item>
             </Navbar.Container>
 

@@ -1,95 +1,161 @@
+import { useState, useEffect } from "react";
 import {
   Columns,
   Form,
   Icon,
   Button,
-  Section,
+  Heading,
   Notification,
 } from "react-bulma-components";
 import { Link } from "react-router-dom";
+import workerService from "../services/workers";
 
 const { Field, Control, Label, Input, Textarea, Help, InputFile } = Form;
 
 const Signup = () => {
+  const [warning, setWarning] = useState("none");
+  const [number, setNumber] = useState();
+  const [name, setName] = useState();
+  const [description, setDesc] = useState();
+  const [workers, setWorkers] = useState();
+  const [password, setPass] = useState();
+  const [role, setRole] = useState();
+  //let history = useHistory();
+
+  var newWorker = {
+    name: "",
+    number: "",
+    role: "",
+    rating: 0,
+    description: "",
+    image:
+      "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+    password: "",
+  };
+
+  const handleNumChange = (event) => {
+    setNumber(event.target.value);
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleDescChange = (event) => {
+    setDesc(event.target.value);
+  };
+
+  const handlePassChange = (event) => {
+    setPass(event.target.value);
+  };
+
+  const clickHandler = () => {
+    if (typeof workers === "undefined") {
+      newWorker.name = name;
+      newWorker.number = number;
+      newWorker.password = password;
+      newWorker.role = role;
+
+      workerService.create(newWorker);
+    } else {
+      setWarning("block");
+    }
+  };
+
+  useEffect(() => {
+    workerService
+      .getAll()
+      .then((response) =>
+        setWorkers(response.find((person) => person.number === number))
+      );
+  }, [clickHandler]);
+
   return (
     <div>
-      <Notification>
-        Already have an Account? <Link to="login">Log in now</Link>
+      <Notification color="warning">
+        <Heading size={6}>
+          Already have an Account? <Link to="login">Log in now</Link>
+        </Heading>
       </Notification>
 
       <Columns>
-        <Columns.Column size="one-quarter"></Columns.Column>
+        <Columns.Column size="half" offset="one-quarter">
+          <Notification color="light">
+            <Field>
+              <Label>Full Name</Label>
+              <Control>
+                <Input
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+              </Control>
+            </Field>
 
-        <Columns.Column size="one-half" color="primary">
-          <Field>
-            <Label>Full Name</Label>
-            <Control>
-              <Input placeholder="Text input" />
-            </Control>
-          </Field>
+            <Field>
+              <Label>Phone Number</Label>
+              <Control>
+                <Input
+                  placeholder="Enter your phone number"
+                  value={number}
+                  onChange={handleNumChange}
+                />
+              </Control>
+              <Help color="danger" style={{ display: warning }}>
+                Phone number already in use.
+              </Help>
+            </Field>
 
-          <Field>
-            <Label>Username</Label>
-            <Control>
+            <Field>
+              <Label>Password</Label>
               <Input
-                color="success"
-                type="text"
-                placeholder="Text input"
-                value="bulma"
-              />
-            </Control>
-            <Help color="success">This username is available</Help>
-          </Field>
+                type="password"
+                value={password}
+                placeholder="Enter your password"
+                onChange={handlePassChange}
+              ></Input>
+            </Field>
 
-          <Field>
-            <Label>Phone Number</Label>
-            <Control>
+            <Field>
+              <Label>Role</Label>
               <Input
-                color="danger"
-                type="number"
-                placeholder="Email input"
-                value="07"
-              />
-            </Control>
-            <Help color="danger">Phone number already in use</Help>
-          </Field>
-          <Field>
-            <Label>Subject</Label>
-          </Field>
+                placeholder="What type of job do you do?"
+                value={role}
+                onChange={handleRoleChange}
+              ></Input>
+            </Field>
 
-          <Field>
-            <Label>Description</Label>
-            <Control>
-              <Textarea placeholder="Tell us about your work" />
-            </Control>
-          </Field>
-
-          <Field>
-            <Label>Photo</Label>
-            <Control>
-              <InputFile
-                icon={<Icon icon="upload" />}
-                boxed
-                placeholder="Textarea"
-              />
-            </Control>
-          </Field>
-
-          <Field>
-            <Control></Control>
-          </Field>
-
-          <Field kind="group">
-            <Control>
-              <Button type="primary">Submit</Button>
-            </Control>
-            <Control>
-              <Button color="link">Cancel</Button>
-            </Control>
-          </Field>
+            <Field>
+              <Label>Description</Label>
+              <Control>
+                <Textarea
+                  placeholder="Tell us about your work"
+                  value={description}
+                  onChange={handleDescChange}
+                />
+              </Control>
+            </Field>
+            <Field>
+              <Label>Photo</Label>
+              <Control>
+                <InputFile
+                  icon={<Icon icon="upload" />}
+                  boxed
+                  placeholder="Textarea"
+                />
+              </Control>
+            </Field>
+            <Field kind="group">
+              <Control>
+                <Button onClick={clickHandler}>Submit</Button>
+              </Control>
+            </Field>
+          </Notification>
         </Columns.Column>
-
-        <Columns.Column size="one-quarter"></Columns.Column>
       </Columns>
     </div>
   );

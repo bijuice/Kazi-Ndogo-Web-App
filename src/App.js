@@ -5,16 +5,17 @@ import Body from "./components/Body";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "./index.css";
 
 const App = () => {
   return (
     <div>
       <Router>
-        <Navbar color="primary">
+        <Navbar color="dark">
           <Navbar.Brand>
             <Navbar.Item>
               <Link to="/">
-                <Heading size={2} color="white">
+                <Heading size={2} className="head">
                   <i>
                     KAZI <sub>ndogo</sub>
                   </i>
@@ -44,10 +45,10 @@ const App = () => {
 
         <Section>
           <Switch>
+            <Route path="/login" component={Login} />
             <Route exact path="/" component={Body} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/profile/:number" component={Profile} />
-            <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
           </Switch>
         </Section>

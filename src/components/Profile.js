@@ -1,24 +1,29 @@
-import {
-  Heading,
-  Columns,
-  Section,
-  Notification,
-} from "react-bulma-components";
+import { Heading, Section, Notification } from "react-bulma-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import workerService from "../services/workers";
 
 const Profile = () => {
   const [workers, setWorkers] = useState([]);
-  const [];
+  const { number } = useParams();
+  const newnum = number.replace(":", "");
 
   useEffect(() => {
-    workerService.getAll().then((response) => setWorkers(response));
+    workerService
+      .getAll()
+      .then((response) =>
+        setWorkers(response.find((person) => person.number === newnum))
+      );
   }, []);
 
   return (
-    <Notification color="primary">
-      <Heading size={5}>{workers.name}</Heading>
-    </Notification>
+    <div>
+      <Notification color="dark">
+        <Heading size={5}>{workers.name}'s Profile</Heading>
+      </Notification>
+
+      <Section></Section>
+    </div>
   );
 };
 

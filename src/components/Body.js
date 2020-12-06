@@ -10,6 +10,24 @@ import { useState, useEffect } from "react";
 import workerService from "../services/workers";
 import { Link } from "react-router-dom";
 
+const Body = () => {
+  const [workers, setWorkers] = useState([]);
+
+  useEffect(() => {
+    workerService.getAll().then((response) => setWorkers(response));
+  }, []);
+
+  return (
+    <div>
+      <Columns>
+        {workers.map((worker) => (
+          <Cards key={worker.number} workers={worker} />
+        ))}
+      </Columns>
+    </div>
+  );
+};
+
 const Cards = ({ workers }) => {
   const processLink = (number) => {
     return `/profile/:${number}`;
@@ -19,13 +37,13 @@ const Cards = ({ workers }) => {
     <Columns.Column size="one-quarter">
       <Card>
         <Card.Image size="4by3" src={workers.image} />
-        <Card.Content>
+        <Card.Content className="content">
           <Media>
             <Media.Item>
               <Heading size={4}>{workers.name}</Heading>
             </Media.Item>
           </Media>
-          <Content color="dark">
+          <Content color="primary">
             <Heading size={5}>
               <b>Role: </b>
               {workers.role}
@@ -53,24 +71,6 @@ const Cards = ({ workers }) => {
         </Card.Footer>
       </Card>
     </Columns.Column>
-  );
-};
-
-const Body = () => {
-  const [workers, setWorkers] = useState([]);
-
-  useEffect(() => {
-    workerService.getAll().then((response) => setWorkers(response));
-  }, []);
-
-  return (
-    <div>
-      <Columns>
-        {workers.map((worker) => (
-          <Cards key={worker.number} workers={worker} />
-        ))}
-      </Columns>
-    </div>
   );
 };
 

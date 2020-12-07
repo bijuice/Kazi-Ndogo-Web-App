@@ -21,7 +21,7 @@ const Body = () => {
     <div>
       <Columns>
         {workers.map((worker) => (
-          <Cards key={worker.number} workers={worker} />
+          <Cards key={worker.id} workers={worker} />
         ))}
       </Columns>
     </div>
@@ -65,7 +65,7 @@ const Cards = ({ workers }) => {
           </Content>
         </Card.Content>
         <Card.Footer>
-          <Link to={processLink(workers.number)}>
+          <Link to={processLink(workers.id)}>
             <Card.Footer.Item>Get Number</Card.Footer.Item>
           </Link>
         </Card.Footer>

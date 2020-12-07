@@ -7,7 +7,7 @@ import {
   Heading,
   Notification,
 } from "react-bulma-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import workerService from "../services/workers";
 
 const { Field, Control, Label, Input, Textarea, Help, InputFile } = Form;
@@ -20,18 +20,9 @@ const Signup = () => {
   const [workers, setWorkers] = useState();
   const [password, setPass] = useState();
   const [role, setRole] = useState();
-  //let history = useHistory();
+  let history = useHistory();
 
-  var newWorker = {
-    name: "",
-    number: "",
-    role: "",
-    rating: 0,
-    description: "",
-    image:
-      "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
-    password: "",
-  };
+
 
   const handleNumChange = (event) => {
     setNumber(event.target.value);
@@ -55,12 +46,20 @@ const Signup = () => {
 
   const clickHandler = () => {
     if (typeof workers === "undefined") {
-      newWorker.name = name;
-      newWorker.number = number;
-      newWorker.password = password;
-      newWorker.role = role;
+      var newWorker = {
+        name: name,
+        id: number,
+        role: role,
+        rating: 0,
+        description: description,
+        image:
+          "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+        password: "",
+      };
 
       workerService.create(newWorker);
+
+      history.push("/")
     } else {
       setWarning("block");
     }
@@ -70,7 +69,7 @@ const Signup = () => {
     workerService
       .getAll()
       .then((response) =>
-        setWorkers(response.find((person) => person.number === number))
+        setWorkers(response.find((person) => person.id === number))
       );
   }, [clickHandler]);
 

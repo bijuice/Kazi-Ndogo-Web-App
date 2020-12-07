@@ -38,7 +38,7 @@ const Login = () => {
     workerService
       .getAll()
       .then((response) =>
-        setWorkers(response.find((person) => person.number === number))
+        setWorkers(response.find((person) => person.id === number))
       );
   }, [clickHandler]);
 

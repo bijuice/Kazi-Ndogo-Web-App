@@ -12,7 +12,7 @@ const Profile = () => {
     workerService
       .getAll()
       .then((response) =>
-        setWorkers(response.find((person) => person.number === newnum))
+        setWorkers(response.find((person) => person.id === newnum))
       );
   }, []);
 

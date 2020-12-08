@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 const Body = () => {
   const [workers, setWorkers] = useState([]);
 
+
   useEffect(() => {
     workerService.getAll().then((response) => setWorkers(response));
   }, []);
@@ -29,6 +30,8 @@ const Body = () => {
 };
 
 const Cards = ({ workers }) => {
+  const total = workers.positive * 100 / (workers.positive + workers.negative);
+  console.log(total)
   const processLink = (number) => {
     return `/profile/:${number}`;
   };
@@ -57,11 +60,11 @@ const Cards = ({ workers }) => {
             </Heading>
             <Progress
               max={100}
-              value={workers.rating}
+              value={total}
               color="success"
               size="medium"
             />
-            <p>{workers.rating}% Positive Reviews</p>
+            <p>{total}% Positive Reviews</p>
           </Content>
         </Card.Content>
         <Card.Footer>
